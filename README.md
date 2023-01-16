@@ -19,6 +19,8 @@ Or create a new one just by
 ```
 $yace
 ```
+and then saving with CTRL S or CTRL D
+
 When inside the editor:
 - CONTROL S -> save
 - CONTROL D -> save with name 
