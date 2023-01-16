@@ -31,6 +31,8 @@ When inside the editor:
 # Compile instructions:
 0 - Download the folder "source"
 
+If you want you can change the number of spaces per tab, it is in a #define in the main.h file. It is 4 by default, you can set it to 8 if you prefer
+
 1 - Make sure you have the ncurses libraries installed, otherwise run 
 ``` 
 $sudo apt-get install libncurses5-dev libncursesw5-dev
@@ -53,6 +55,17 @@ The code is quite a mess and there are a lot of returning values from function t
 - Add copy/paste support
 - Add some tweaks to improve the GUI, and even a file explorer
 - I'd like to have colours and themes at a certain point
+
+# Documentation:
+
+- the yace.c contains the main function and the main loop
+- guim.c/h == gui management, it manage the GUI using the ncurses libraries and some modules that I written. The file guim.h contains a stack where the windows are stored. The windows are struct that I called "UserControl". They contains the function to manage themself, to draw themself, and so on. The last window in the stack is the one that is updated
+- the files that end with "win" are used by guim.h
+- docm.c/h and memm.c/h defines the structures used to store the actual content of the file. memm.c (memory management) define a single line of the document (called DocumentString), docm.c/h define a structure called Document that contains multiple DocumentString
+- utils.c/h contains some function that I didn't know where to put
+- filem.c/h (file management) contains functions to open and close files
+
+Thats all
 
 
  
