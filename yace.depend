@@ -1,0 +1,109 @@
+# depslib dependency file v1.0
+1673441792 source:/home/samuele/Projects/Editor/yace.c
+	<stdio.h>
+	<ncurses.h>
+
+1673884078 source:/home/samuele/Projects/Editor/yace/yace.c
+	"main.h"
+	"utils.h"
+	"docm.h"
+	"guim.h"
+	"filem.h"
+	<signal.h>
+	<unistd.h>
+	<limits.h>
+	<string.h>
+
+1673882084 /home/samuele/Projects/Editor/yace/main.h
+	<ncurses.h>
+	<stdio.h>
+	<locale.h>
+	<stddef.h>
+	<wchar.h>
+	<wctype.h>
+	<sys/time.h>
+	<stdlib.h>
+
+1673884069 source:/home/samuele/Projects/Editor/yace/utils.c
+	"utils.h"
+	"main.h"
+	<string.h>
+
+1673883988 /home/samuele/Projects/Editor/yace/utils.h
+	"main.h"
+
+1673697155 source:/home/samuele/Projects/Editor/yace/memm.c
+	"memm.h"
+
+1673556695 /home/samuele/Projects/Editor/yace/memm.h
+	"main.h"
+
+1673881780 source:/home/samuele/Projects/Editor/yace/guim.c
+	"guim.h"
+	"docwin.h"
+	"savewin.h"
+	"gotolwin.h"
+	<string.h>
+
+1673880922 /home/samuele/Projects/Editor/yace/guim.h
+	"main.h"
+	"maskm.h"
+
+1673884203 /home/samuele/Projects/Editor/yace/docm.h
+	"main.h"
+	"memm.h"
+
+1673884936 source:/home/samuele/Projects/Editor/yace/docm.c
+	"docm.h"
+
+1673704858 /home/samuele/Projects/Editor/yace/maskm.h
+	"main.h"
+	"docm.h"
+
+1673697740 source:/home/samuele/Projects/Editor/yace/maskm.c
+	"maskm.h"
+
+1673878090 /home/samuele/Projects/Editor/yace/filem.h
+	"main.h"
+	"docm.h"
+
+1673878813 source:/home/samuele/Projects/Editor/yace/filem.c
+	"filem.h"
+	<unistd.h>
+	<limits.h>
+	<string.h>
+	<wchar.h>
+
+1673885025 source:/home/samuele/Projects/Editor/yace/docwin.c
+	"docwin.h"
+	"guim.h"
+	"utils.h"
+	<string.h>
+
+1673793969 /home/samuele/Projects/Editor/yace/docwin.h
+	"main.h"
+	"maskm.h"
+	"guim.h"
+
+1673799246 /home/samuele/Projects/Editor/yace/savewin.h
+	"main.h"
+	"guim.h"
+	"utils.h"
+
+1673879583 source:/home/samuele/Projects/Editor/yace/savewin.c
+	"savewin.h"
+	"filem.h"
+	"guim.h"
+
+1673884676 source:/home/samuele/Projects/Editor/yace/gotolwin.c
+	"gotolwin.h"
+	"filem.h"
+	"guim.h"
+
+1673879788 source:/home/samuele/Projects/Editor/yace/openwin.c
+
+1673880445 /home/samuele/Projects/Editor/yace/gotolwin.h
+	"main.h"
+	"guim.h"
+	"utils.h"
+
