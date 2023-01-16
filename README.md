@@ -63,7 +63,7 @@ The code is quite a mess and there are a lot of returning values from function t
 - the files that end with "win" are used by guim.h
 - docm.c/h and memm.c/h defines the structures used to store the actual content of the file. memm.c (memory management) define a single line of the document (called DocumentString), docm.c/h define a structure called Document that contains multiple DocumentString
 - utils.c/h contains some function that I didn't know where to put
-- filem.c/h (file management) contains functions to open and close files
+- filem.c/h (file management) contains functions to load and save files
 
 Thats all
 
