@@ -29,6 +29,7 @@ When inside the editor:
 - With PAGE UP and PAGE DOWN (or control + arrow up, control + arrow down) you can move up or down by one page (one page is the number of lines that are visible in the screen)
 
 # Compile instructions:
+0 - Download the folder "source"
 
 1 - Make sure you have the ncurses libraries installed, otherwise run 
 ``` 
