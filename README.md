@@ -15,10 +15,13 @@ Open a file with
 ```
 $yace filename
 ```
-
+Or create a new one just by
+```
+$yace
+```
 When inside the editor:
 - CONTROL S -> save
-- CONTROL D -> save with name
+- CONTROL D -> save with name 
 - CONTROL G -> open a menu that allow you to go to a specific line in the file
 - CONTROL R -> reinitialize the interface
 - CONTROL Q -> quit (without saving, no warning are showed)
