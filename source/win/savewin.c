@@ -24,7 +24,7 @@ int savew_deinit(UserControl uc){
 }
 int savew_reinit(UserControl uc){
     savew_deinit(uc);
-    return savew_reinit(uc);
+    return savew_init(uc);
 }
 int savew_draw(UserControl uc){
     update_mask(uc->mask, uc->doc);

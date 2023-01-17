@@ -15,9 +15,9 @@ Document_string* alloc_string(int size){
 }
 
 int realloc_string(Document_string* str, int new_size){
+    if(new_size < 1) new_size = 1;
     wchar_t *new_str = (wchar_t*) malloc(sizeof(wchar_t)*(new_size + 1));
     if(new_str == NULL) return -1;
-    if(new_size < 1) new_size = 1;
     if(str->_used > new_size) str->_used = new_size;
     for(int i = 0; i < str->_used; i++){
         new_str[i] = str->string[i];
@@ -38,7 +38,8 @@ void dealloc_string(Document_string* old){
 
 int add_character(Document_string* str, int position, wchar_t character){
     if(str->_used == str->size){
-        realloc_string(str, str->size + STR_REALLOC_DEF_INTERVAL);
+        int result = realloc_string(str, str->size + STR_REALLOC_DEF_INTERVAL);
+        if(result < 0) return result;
     }
     if(position > str->size){
         int result = realloc_string(str, str->size + position);

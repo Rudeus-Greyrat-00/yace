@@ -1,6 +1,8 @@
 # yace
 Yet another CLI editor, a simple command line interface text editor written in C
 
+THIS FILE IS ADDED TO GITIGNORE SO YOU SHOUD NOT READ THIS USLESS MODIFICATION 
+
 Yace is a simple text editor that I created in a couple of days for fun. This version is still a little bit rough, and lack a lot of functions.
 
 ![immagine](https://user-images.githubusercontent.com/96582680/212738286-d1b91f13-29de-4f14-9edd-57ea2c88a1cd.png)

@@ -1,7 +1,6 @@
-.md
+README.md
 LICENSE
 bin/
 obj/
 yace.code-workspace
 .vscode
-makefile.OLD

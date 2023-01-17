@@ -44,9 +44,9 @@ int gotow_draw(UserControl uc){
     wmove(uc->window, 1, 1);
     wprintw(uc->window, "Go to line:");
     wmove(uc->window, 3, 1);
-    wprintw(uc->window, "0 >= ");
+    wprintw(uc->window, "0 ≥  ");
     wprintw(uc->window, "%ls", uc->mask->matrix[0]);
-    wprintw(uc->window, " >= %d", max_value - 1);
+    wprintw(uc->window, " ≥ %d", max_value - 1);
     char val[2 * MAX_ROW_GOTOL_INPUT];
     int news = wchar_to_char(uc->doc->lines[0]->string, val, 2 * MAX_ROW_GOTOL_INPUT);
     if(news > 0 && news <= MAX_ROW_GOTOL_INPUT && atoi(val) < max_value); //ok

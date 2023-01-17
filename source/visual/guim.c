@@ -58,7 +58,7 @@ UserControl create_savew_usercontrol(Document* doc){ //create the save with name
     return uc;
 }
 
-UserControl create_gotow_usercontrol(Document* doc){
+UserControl create_gotow_usercontrol(Document* doc){ //create the goto line user control
     UserControl uc = alloc_user_control();
     if(uc == NULL) return NULL;
     if(doc == NULL) uc->doc = alloc_document(1, STR_REALLOC_DEF_INTERVAL);
@@ -79,14 +79,14 @@ UserControl create_gotow_usercontrol(Document* doc){
 //ACTUAL GUI MANAGEMENT
 
 void GUI_INIT(Document* doc){
-    for(int i = 0; i < UC_STACK_SIZE; i++) g_usercontrol_stack[i] = NULL; //temp
+    for(int i = 0; i < UC_STACK_SIZE; i++) g_usercontrol_stack[i] = NULL; 
     initscr();
     raw();				// Line buffering disabled
 	keypad(stdscr, TRUE);		// We get F1, F2 etc..
 	noecho();			// Don't echo() while we do getch
     //creating controls:
     UserControl docwindow = create_docw_usercontrol(doc); //the user control that manage the text editor
-    docwindow->initialize(docwindow); //temp
+    docwindow->initialize(docwindow); //the user control that manage the text editor is always initialized (this is a text editor after all)
     //adding controls to the stack
     g_usercontrol_stack[0] = docwindow; //the user control that manage the text editor is always in this position
 }
