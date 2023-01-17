@@ -13,6 +13,4 @@ int gotow_draw(UserControl uc);
 
 int gotow_handle_input(UserControl uc, wchar_t input, int crm);
 
-
-
 #endif // SAVEWIN

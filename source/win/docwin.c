@@ -199,12 +199,16 @@ int docw_handle_input(UserControl uc, wchar_t input, int crm){
                 case REFRESH:
                     return R_REFRESH;
                 case SAVE:
-                    return R_SAVEFILE;
+                    feedback = save_file_name(doc->docname, doc);
+                    if(feedback < 0) return feedback;
                 case SAVE_WITH_NAME:
                     GUI_ADD_WINDOW(UC_NAME_SWN);
                     break;
                 case GOTOL:
                     GUI_ADD_WINDOW(UC_NAME_GOTOL);
+                    break;
+                case OPEN:
+                    GUI_ADD_WINDOW(UC_NAME_OPEN);
                     break;
                 default:
                     if(is_valid_character(ch) || ch == '\t') doc_add_character(doc, ch);

@@ -40,7 +40,9 @@ int GUI_REMOVE_WINDOW(); //return the index of the removed window on the stack. 
 
 #define UC_NAME_UNNAMED 0
 #define UC_NAME_MAINW 1 //the main window editor
-#define UC_NAME_SWN 2 //save with name
-#define UC_NAME_GOTOL 3 //overwrite warning
+#define UC_NAME_SWN 2 //save with name window
+#define UC_NAME_GOTOL 3 //go to line window
+#define UC_NAME_OPEN 4 //open file window
+#define UC_NAME_CHANGEWD 5 //change working directory window
 
 #endif // GUIM

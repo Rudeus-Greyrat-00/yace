@@ -4,6 +4,7 @@
 #include "../visual/maskm.h"
 #include "../visual/guim.h"
 #include "../utils/utils.h"
+#include "../utils/filem.h"
 
 int docw_init(UserControl uc);
 int docw_deinit(UserControl uc);

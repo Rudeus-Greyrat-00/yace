@@ -5,7 +5,6 @@
 #include "utils/filem.h"
 #include <signal.h>
 #include <unistd.h>
-#include <limits.h>
 #include <string.h>
 
 
@@ -33,6 +32,7 @@ int main(int argc, char** argv){
         dealloc_document(doc);
         exit(-1);
     }
+    strcpy(g_current_directory, cwd);
     if(argc > 1){
         strcpy(document_name, argv[1]);
         int result = load_file_name(document_name, doc);
@@ -85,7 +85,7 @@ int main(int argc, char** argv){
             printf("ERROR");
         }
         else{
-            if(current == UC_NAME_MAINW){  //temp, all this stuff must be moved inside GUI_HANDLE_INPUT
+            if(current == UC_NAME_MAINW){
                 int feedback;
                 switch(res){
                     case R_REFRESH:
@@ -95,8 +95,6 @@ int main(int argc, char** argv){
                     case R_QUIT:
                         quit = true;
                         break;
-                    case R_SAVEFILE:
-                        feedback = save_file_name(doc->docname, doc);
                 }
             }
         }
