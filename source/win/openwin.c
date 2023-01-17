@@ -1,6 +1,7 @@
 #include "openwin.h"
 #include <string.h>
 #include <dirent.h>
+#include <errno.h>
 
 #define OPENW_DEF_POSX 8
 #define OPENW_DEF_POSY 1
@@ -11,7 +12,7 @@
 #define MASK_POSX 1
 #define MASK_POSY 4
 
-#define MASK_H 14
+#define MASK_H 13
 #define MASK_W 78
 
 #define MAX_PATHLENGHT_STRING 60
@@ -29,21 +30,43 @@ int compile_file_list(UserControl uc){
     DIR *d;
     struct dirent *dir;
     d = opendir(g_current_directory);
-    if(d){
-        while ((dir = readdir(d)) != NULL){
-            int sz = strlen(dir->d_name);
-            for(int i = 0; i < 4; i++){
-                int result = doc_add_character(uc->doc, ' ');
-                if(result < 0) return result;
+    if(d == NULL) return -1;
+    errno = 0;
+    while ((dir = readdir(d)) != NULL){
+        if(strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0) continue;
+        if(dir->d_type != DT_REG && dir->d_type != DT_DIR) continue;
+        int sz = strlen(dir->d_name);
+        for(int i = 0; i < 4; i++){
+            int result = doc_add_character(uc->doc, ' ');
+            if(result < 0) {
+                closedir(d);
+                return result;
             }
-            for(int i = 0; i < sz; i++){
-                int result = doc_add_character(uc->doc, (wchar_t)dir->d_name[i]);
-                if(result < 0) return result;
+        }
+        for(int i = 0; i < sz; i++){
+            int result = doc_add_character(uc->doc, (wchar_t)dir->d_name[i]);
+            if(result < 0) {
+                closedir(d);
+                return result;
             }
-            int result = doc_cursor_enter(uc->doc);
-            if(result < 0) return result;
+        }
+        if(dir->d_type == DT_DIR){
+            int result = doc_add_character(uc->doc, '/');
+            if(result < 0) {
+                closedir(d);
+                return result;
+            }
+        }
+        int result = doc_cursor_enter(uc->doc);
+        if(result < 0) {
+            closedir(d);
+            return result;
         }
     }
+    if(errno != 0) return -1;
+    closedir(d);
+    int result = doc_remove_character(uc->doc);
+    if(result < 0) return result;
     uc->doc->cursor_x = 0;
     uc->doc->cursor_y = 0;
     return 0;
