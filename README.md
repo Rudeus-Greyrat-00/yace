@@ -42,8 +42,8 @@ $sudo apt-get install libncurses5-dev libncursesw5-dev
 2 - Go inside the project directory, then run the makefile
 
 ``` 
-$cd [where you put the folder]
-$makefile
+$cd (go inside the "source" folder)
+$make
 ```
 3 - Some folder will be generated, the compiled program should be inside projectfolder/bin/Relase
 
