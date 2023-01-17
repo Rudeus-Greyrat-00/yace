@@ -13,11 +13,11 @@ Yace is a simple text editor that I created in a couple of days for fun. This ve
 
 Open a file with 
 ```
-$yace filename
+$ yace filename
 ```
 Or create a new one just by
 ```
-$yace
+$ yace
 ```
 and then saving with CTRL S or CTRL D
 
