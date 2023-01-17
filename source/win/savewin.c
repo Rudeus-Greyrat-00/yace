@@ -1,6 +1,4 @@
 #include "savewin.h"
-#include "filem.h"
-#include "guim.h"
 
 #define SAVEW_DEF_POSX 8
 #define SAVEW_DEF_POSY 2

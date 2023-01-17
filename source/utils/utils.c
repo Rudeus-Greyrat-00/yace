@@ -1,5 +1,4 @@
 #include "utils.h"
-#include "main.h"
 #include <string.h>
 
 int left_in[] = KEY_LEFT_INPUT, right_in[] = KEY_RIGHT_INPUT, up_in[] = KEY_UP_INPUT, down_in[] = KEY_DOWN_INPUT, c_left_in[] = CTRL_KEY_LEFT_INPUT, c_right_in[] = CTRL_KEY_RIGHT_INPUT, c_up_in[] = CTRL_KEY_UP_INPUT, c_down_in[] = CTRL_KEY_DOWN_INPUT, pgd[] = PGDOWN_INPUT, pgup[] = PGUP_INPUT;

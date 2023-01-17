@@ -1,8 +1,8 @@
 #include "main.h"
-#include "utils.h"
-#include "docm.h"
-#include "guim.h"
-#include "filem.h"
+#include "utils/utils.h"
+#include "datam/docm.h"
+#include "visual/guim.h"
+#include "utils/filem.h"
 #include <signal.h>
 #include <unistd.h>
 #include <limits.h>

@@ -1,6 +1,4 @@
 #include "docwin.h"
-#include "guim.h"
-#include "utils.h"
 #include <string.h>
 
 

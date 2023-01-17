@@ -1,7 +1,7 @@
-#include "guim.h"
-#include "docwin.h"
-#include "savewin.h"
-#include "gotolwin.h"
+#include "../visual/guim.h"
+#include "../win/docwin.h"
+#include "../win/savewin.h"
+#include "../win/gotolwin.h"
 #include <string.h>
 
 //GUI UTILS

@@ -1,6 +1,6 @@
 #ifndef MEMM
 #define MEMM
-#include "main.h"
+#include "../main.h"
 
 typedef struct{
     wchar_t* string;

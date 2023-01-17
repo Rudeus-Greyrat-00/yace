@@ -1,8 +1,10 @@
 #ifndef SAVEWIN
 #define SAVEWIN
-#include "main.h"
-#include "guim.h"
-#include "utils.h"
+#include "../main.h"
+#include "../visual/guim.h"
+#include "../utils/utils.h"
+#include "../utils/filem.h"
+#include "../visual/guim.h"
 
 int savew_init(UserControl uc);
 int savew_deinit(UserControl uc);

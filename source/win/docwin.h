@@ -1,8 +1,9 @@
 #ifndef DOCWIN
 #define DOCWIN
-#include "main.h"
-#include "maskm.h"
-#include "guim.h"
+#include "../main.h"
+#include "../visual/maskm.h"
+#include "../visual/guim.h"
+#include "../utils/utils.h"
 
 int docw_init(UserControl uc);
 int docw_deinit(UserControl uc);

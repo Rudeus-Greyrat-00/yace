@@ -1,8 +1,10 @@
 #ifndef GOTOWIN
 #define GOTOWIN
-#include "main.h"
-#include "guim.h"
-#include "utils.h"
+#include "../main.h"
+#include "../visual/guim.h"
+#include "../utils/utils.h"
+#include "../utils/filem.h"
+#include "../visual/guim.h"
 
 int gotow_init(UserControl uc);
 int gotow_deinit(UserControl uc);

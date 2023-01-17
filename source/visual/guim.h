@@ -1,6 +1,6 @@
 #ifndef GUIM
 #define GUIM
-#include "main.h"
+#include "../main.h"
 #include "maskm.h"
 
 struct UControl{

@@ -2,3 +2,6 @@
 LICENSE
 bin/
 obj/
+yace.code-workspace
+.vscode
+makefile.OLD

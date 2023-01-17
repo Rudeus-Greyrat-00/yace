@@ -1,7 +1,7 @@
 #ifndef FILEM
 #define FILEM
-#include "main.h"
-#include "docm.h"
+#include "../main.h"
+#include "../datam/docm.h"
 
 #define ERR_NOT_FOUND -1
 

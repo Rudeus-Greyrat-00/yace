@@ -1,6 +1,6 @@
 #ifndef DOCM
 #define DOCM
-#include "main.h"
+#include "../main.h"
 #include "memm.h"
 
 #define C_MODE_STD 0

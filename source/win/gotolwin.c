@@ -1,6 +1,4 @@
 #include "gotolwin.h"
-#include "filem.h"
-#include "guim.h"
 
 #define GOTOW_DEF_POSX 8
 #define GOTOW_DEF_POSY 2

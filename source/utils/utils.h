@@ -1,6 +1,6 @@
 #ifndef UTILS
 #define UTILS
-#include "main.h"
+#include "../main.h"
 
 #define A_KEY_LEFT 1
 #define A_KEY_RIGHT 2

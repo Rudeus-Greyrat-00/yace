@@ -1,7 +1,7 @@
 #ifndef MASKM
 #define MASKM
-#include "main.h"
-#include "docm.h"
+#include "../main.h"
+#include "../datam/docm.h"
 
 typedef struct{
     wchar_t** matrix;

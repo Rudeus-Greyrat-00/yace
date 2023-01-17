@@ -12,7 +12,7 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -Wall
+CFLAGS = -Wall -I
 RESINC = 
 LIBDIR = 
 LIB = -lncursesw
@@ -25,126 +25,65 @@ RCFLAGS_DEBUG = $(RCFLAGS)
 LIBDIR_DEBUG = $(LIBDIR)
 LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG = $(LDFLAGS)
-OBJDIR_DEBUG = obj/Debug
+OBJDIR_DEBUG = obj
 DEP_DEBUG = 
-OUT_DEBUG = bin/Debug/yace
+OUT_DEBUG = bin/yace
 
-INC_RELEASE = $(INC)
-CFLAGS_RELEASE = $(CFLAGS) -O2
-RESINC_RELEASE = $(RESINC)
-RCFLAGS_RELEASE = $(RCFLAGS)
-LIBDIR_RELEASE = $(LIBDIR)
-LIB_RELEASE = $(LIB)
-LDFLAGS_RELEASE = $(LDFLAGS) -s
-OBJDIR_RELEASE = obj/Release
-DEP_RELEASE = 
-OUT_RELEASE = bin/Release/yace
 
 OBJ_DEBUG = $(OBJDIR_DEBUG)/maskm.o $(OBJDIR_DEBUG)/yace.o $(OBJDIR_DEBUG)/utils.o $(OBJDIR_DEBUG)/savewin.o $(OBJDIR_DEBUG)/openwin.o $(OBJDIR_DEBUG)/memm.o $(OBJDIR_DEBUG)/docm.o $(OBJDIR_DEBUG)/guim.o $(OBJDIR_DEBUG)/gotolwin.o $(OBJDIR_DEBUG)/filem.o $(OBJDIR_DEBUG)/docwin.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/maskm.o $(OBJDIR_RELEASE)/yace.o $(OBJDIR_RELEASE)/utils.o $(OBJDIR_RELEASE)/savewin.o $(OBJDIR_RELEASE)/openwin.o $(OBJDIR_RELEASE)/memm.o $(OBJDIR_RELEASE)/docm.o $(OBJDIR_RELEASE)/guim.o $(OBJDIR_RELEASE)/gotolwin.o $(OBJDIR_RELEASE)/filem.o $(OBJDIR_RELEASE)/docwin.o
+all: build
 
-all: debug release
+clean: clean_build
 
-clean: clean_debug clean_release
-
-before_debug: 
-	test -d bin/Debug || mkdir -p bin/Debug
+before_build: 
+	test -d bin || mkdir -p bin
 	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
 
-after_debug: 
+after_build: 
 
-debug: before_debug out_debug after_debug
+build: before_build out_build after_build
 
-out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
+out_build: before_build $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
 
-$(OBJDIR_DEBUG)/maskm.o: maskm.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c maskm.c -o $(OBJDIR_DEBUG)/maskm.o
+$(OBJDIR_DEBUG)/maskm.o: visual/maskm.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c visual/maskm.c -o $(OBJDIR_DEBUG)/maskm.o
 
 $(OBJDIR_DEBUG)/yace.o: yace.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c yace.c -o $(OBJDIR_DEBUG)/yace.o
 
-$(OBJDIR_DEBUG)/utils.o: utils.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c utils.c -o $(OBJDIR_DEBUG)/utils.o
+$(OBJDIR_DEBUG)/utils.o: utils/utils.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c utils/utils.c -o $(OBJDIR_DEBUG)/utils.o
 
-$(OBJDIR_DEBUG)/savewin.o: savewin.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c savewin.c -o $(OBJDIR_DEBUG)/savewin.o
+$(OBJDIR_DEBUG)/savewin.o: win/savewin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/savewin.c -o $(OBJDIR_DEBUG)/savewin.o
 
-$(OBJDIR_DEBUG)/openwin.o: openwin.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c openwin.c -o $(OBJDIR_DEBUG)/openwin.o
+$(OBJDIR_DEBUG)/openwin.o: win/openwin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/openwin.c -o $(OBJDIR_DEBUG)/openwin.o
 
-$(OBJDIR_DEBUG)/memm.o: memm.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c memm.c -o $(OBJDIR_DEBUG)/memm.o
+$(OBJDIR_DEBUG)/memm.o: datam/memm.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c datam/memm.c -o $(OBJDIR_DEBUG)/memm.o
 
-$(OBJDIR_DEBUG)/docm.o: docm.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c docm.c -o $(OBJDIR_DEBUG)/docm.o
+$(OBJDIR_DEBUG)/docm.o: datam/docm.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c datam/docm.c -o $(OBJDIR_DEBUG)/docm.o
 
-$(OBJDIR_DEBUG)/guim.o: guim.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c guim.c -o $(OBJDIR_DEBUG)/guim.o
+$(OBJDIR_DEBUG)/guim.o: visual/guim.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c visual/guim.c -o $(OBJDIR_DEBUG)/guim.o
 
-$(OBJDIR_DEBUG)/gotolwin.o: gotolwin.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c gotolwin.c -o $(OBJDIR_DEBUG)/gotolwin.o
+$(OBJDIR_DEBUG)/gotolwin.o: win/gotolwin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/gotolwin.c -o $(OBJDIR_DEBUG)/gotolwin.o
 
-$(OBJDIR_DEBUG)/filem.o: filem.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c filem.c -o $(OBJDIR_DEBUG)/filem.o
+$(OBJDIR_DEBUG)/filem.o: utils/filem.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c utils/filem.c -o $(OBJDIR_DEBUG)/filem.o
 
-$(OBJDIR_DEBUG)/docwin.o: docwin.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c docwin.c -o $(OBJDIR_DEBUG)/docwin.o
+$(OBJDIR_DEBUG)/docwin.o: win/docwin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/docwin.c -o $(OBJDIR_DEBUG)/docwin.o
 
-clean_debug: 
+clean_build: 
 	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
-	rm -rf bin/Debug
+	rm -rf bin
 	rm -rf $(OBJDIR_DEBUG)
 
-before_release: 
-	test -d bin/Release || mkdir -p bin/Release
-	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
-
-after_release: 
-
-release: before_release out_release after_release
-
-out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
-	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
-
-$(OBJDIR_RELEASE)/maskm.o: maskm.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c maskm.c -o $(OBJDIR_RELEASE)/maskm.o
-
-$(OBJDIR_RELEASE)/yace.o: yace.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c yace.c -o $(OBJDIR_RELEASE)/yace.o
-
-$(OBJDIR_RELEASE)/utils.o: utils.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c utils.c -o $(OBJDIR_RELEASE)/utils.o
-
-$(OBJDIR_RELEASE)/savewin.o: savewin.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c savewin.c -o $(OBJDIR_RELEASE)/savewin.o
-
-$(OBJDIR_RELEASE)/openwin.o: openwin.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c openwin.c -o $(OBJDIR_RELEASE)/openwin.o
-
-$(OBJDIR_RELEASE)/memm.o: memm.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c memm.c -o $(OBJDIR_RELEASE)/memm.o
-
-$(OBJDIR_RELEASE)/docm.o: docm.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c docm.c -o $(OBJDIR_RELEASE)/docm.o
-
-$(OBJDIR_RELEASE)/guim.o: guim.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c guim.c -o $(OBJDIR_RELEASE)/guim.o
-
-$(OBJDIR_RELEASE)/gotolwin.o: gotolwin.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c gotolwin.c -o $(OBJDIR_RELEASE)/gotolwin.o
-
-$(OBJDIR_RELEASE)/filem.o: filem.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c filem.c -o $(OBJDIR_RELEASE)/filem.o
-
-$(OBJDIR_RELEASE)/docwin.o: docwin.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c docwin.c -o $(OBJDIR_RELEASE)/docwin.o
-
-clean_release: 
-	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
-	rm -rf bin/Release
-	rm -rf $(OBJDIR_RELEASE)
-
-.PHONY: before_debug after_debug clean_debug before_release after_release clean_release
+.PHONY: before_build after_build clean_build
 
