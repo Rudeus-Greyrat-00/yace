@@ -37,19 +37,19 @@ If you want you can change the number of spaces per tab, it is in a #define in t
 
 1 - Make sure you have the ncurses libraries installed, otherwise run 
 ``` 
-$sudo apt-get install libncurses5-dev libncursesw5-dev
+$ sudo apt-get install libncurses5-dev libncursesw5-dev
 ```
-2 - Go inside the project directory, then run the makefile
+2 - Go inside the "source" directory, then run the makefile
 
 ``` 
-$cd [where you put the folder]
-$makefile
+$ cd (go inside "source")
+$ make
 ```
 3 - Some folder will be generated, the compiled program should be inside projectfolder/bin/Relase
 
 # Know issues:
 
-The code is quite a mess and there are a lot of returning values from function that are not evaluated. IDK if I'll continue working on this, but the first thing that I'll do is to clean the code
+The code is quite a mess and there are a lot of returning values from function that are not evaluated. 
 
 # Roadmap:
 
