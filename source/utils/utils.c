@@ -54,3 +54,13 @@ int check_action(int* buffer){
 int wchar_to_char(wchar_t* source, char* destination, int size){
     return (int) wcstombs(destination, source, (size_t)size);
 }
+
+void log_unfixable_error(int deinit_gui, char* error){
+    Document* doc = g_usercontrol_stack[0]->doc;
+    if(deinit_gui) GUI_DEINIT(NULL);
+    dealloc_document(doc);
+    printf("An error occurred and yace had to be closed. Yace version: ");
+    printf(YACE_VER);
+    printf("\nError (it would be like, really kind of you if you reported this to the developer): %s\n", error);
+    exit(-1);
+}

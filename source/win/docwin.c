@@ -201,6 +201,7 @@ int docw_handle_input(UserControl uc, wchar_t input, int crm){
                 case SAVE:
                     feedback = save_file_name(doc->docname, doc);
                     if(feedback < 0) return feedback;
+                    break;
                 case SAVE_WITH_NAME:
                     GUI_ADD_WINDOW(UC_NAME_SWN);
                     break;
