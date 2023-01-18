@@ -23,7 +23,8 @@ and then saving with CTRL S or CTRL D
 
 When inside the editor:
 - CONTROL S -> save
-- CONTROL D -> save with name 
+- CONTROL O -> open a file/navigate the file system
+- CONTROL D -> save with name (WIP, must become similar to openwin)
 - CONTROL G -> open a menu that allow you to go to a specific line in the file
 - CONTROL R -> reinitialize the interface
 - CONTROL Q -> quit (without saving, no warning are showed)
