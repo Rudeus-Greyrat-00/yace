@@ -34,5 +34,9 @@ int check_action(int* buffer);
 int wchar_to_char(wchar_t* source, char* destination, int size);
 
 void log_unfixable_error(int deinit_gui, char* str);
+void generate_path_str(char* dest, int limit);
+int path_exists(char* str);
+int get_dir_type(char* str);
+int compile_file_list(Document* doc);
 
 #endif // UTILS
