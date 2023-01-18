@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define YACE_VER "0.1"
+#define YACE_VER "0.2"
 
 #define true 1
 #define false 0
