@@ -1,6 +1,7 @@
 #ifndef UTILS
 #define UTILS
 #include "../main.h"
+#include "../visual/guim.h"
 
 #define A_KEY_LEFT 1
 #define A_KEY_RIGHT 2
@@ -31,5 +32,11 @@ void reset_cnt_buffer(int* buffer);
 int cnt_buffer_addchar(int* buffer, int character);
 int check_action(int* buffer);
 int wchar_to_char(wchar_t* source, char* destination, int size);
+
+void log_unfixable_error(int deinit_gui, char* str);
+void generate_path_str(char* dest, int limit);
+int path_exists(char* str);
+int get_dir_type(char* str);
+int compile_file_list(Document* doc);
 
 #endif // UTILS

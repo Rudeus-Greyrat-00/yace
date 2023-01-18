@@ -6,6 +6,7 @@
 #include <wctype.h>
 #include <sys/time.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define YACE_VER "0.1"
 
@@ -44,6 +45,7 @@
 #define CUT 24 //CTRL X
 #define UNDO 26 //CTRL Z
 #define GOTOL 7 //CTRL G
+#define OPEN 15 //CTRL O
 
 #define MODE_DETECT_LINUX 1
 #define MODE_DETECT_WINDOWS 2
@@ -51,5 +53,7 @@
 #define MODE_DETECT_MIXED 4
 
 #define UC_STACK_SIZE 10
+
+char g_current_directory[PATH_MAX];
 
 

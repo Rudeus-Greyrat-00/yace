@@ -2,6 +2,7 @@
 #include "../win/docwin.h"
 #include "../win/savewin.h"
 #include "../win/gotolwin.h"
+#include "../win/openwin.h"
 #include <string.h>
 
 //GUI UTILS
@@ -73,6 +74,24 @@ UserControl create_gotow_usercontrol(Document* doc){ //create the goto line user
     uc->draw = gotow_draw;
     uc->handle_input = gotow_handle_input;
     uc->name = UC_NAME_GOTOL;
+    return uc;
+}
+
+UserControl create_openw_usercontrol(Document* doc){ //create the goto line user control
+    UserControl uc = alloc_user_control();
+    if(uc == NULL) return NULL;
+    if(doc == NULL) uc->doc = alloc_document(1, STR_REALLOC_DEF_INTERVAL);
+    else uc->doc = doc;
+    if(uc->doc == NULL) {
+        dealloc_user_control(uc);
+        return NULL;
+    }
+    uc->initialize = openw_init;
+    uc->deinitialize = openw_deinit;
+    uc->reinitialize = openw_reinit;
+    uc->draw = openw_draw;
+    uc->handle_input = openw_handle_input;
+    uc->name = UC_NAME_OPEN;
     return uc;
 }
 
@@ -158,6 +177,11 @@ int GUI_ADD_WINDOW(int name){ //add the selected window to the stack
             break;
         case UC_NAME_GOTOL:
             new_win = create_gotow_usercontrol(NULL);
+            if(new_win == NULL) unfixable_error_handler();
+            new_win->initialize(new_win);
+            break;
+        case UC_NAME_OPEN:
+            new_win = create_openw_usercontrol(NULL);
             if(new_win == NULL) unfixable_error_handler();
             new_win->initialize(new_win);
             break;

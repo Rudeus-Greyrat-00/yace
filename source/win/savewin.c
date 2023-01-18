@@ -1,4 +1,5 @@
 #include "savewin.h"
+#include <string.h>
 
 #define SAVEW_DEF_POSX 8
 #define SAVEW_DEF_POSY 2
@@ -38,8 +39,9 @@ int savew_draw(UserControl uc){
     if(size > 0 || size < MAX_FNAME_SIZE){
         char filename[MAX_FNAME_SIZE];
         int news = wchar_to_char(uc->doc->lines[0]->string, filename, MAX_FNAME_SIZE);
-        if(news > 0 && file_exist_with_same_name(filename)){
-            wprintw(uc->window, "There exist a file with the same name in current directory\n By pressing ENTER, the old file will be overwritten");
+        if(news > 0){
+            if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) wprintw(uc->window, "The names .. and . are reserved");
+            else if(file_exist_with_same_name(filename)) wprintw(uc->window, "There exist a file with the same name in current directory\n By pressing ENTER, the old file will be overwritten");
         }
     }
     else if(size >= MAX_FNAME_SIZE){
@@ -100,12 +102,13 @@ int savew_handle_input(UserControl uc, wchar_t input, int crm){
                     char filename[MAX_FNAME_SIZE];
                     int news = wchar_to_char(uc->doc->lines[0]->string, filename, MAX_FNAME_SIZE);
                     if(news <= 0) break;
-                    save_file_name(filename, g_usercontrol_stack[0]->doc);
-                    GUI_REMOVE_WINDOW();
+                    if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) break;
+                    int result = save_file_name(filename, g_usercontrol_stack[0]->doc);
+                    if(result >= 0) GUI_REMOVE_WINDOW();
                     break;
                     }
                 default:
-                    if(is_valid_character(ch)) doc_add_character(doc, ch);
+                    if(is_valid_character(ch) && ch != '/') doc_add_character(doc, ch);
         }
     }
     return R_OK;

@@ -1,4 +1,5 @@
 #include "filem.h"
+#include "utils.h"
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
@@ -100,9 +101,7 @@ int save_file(char* path, Document* doc){
 
 int save_file_name(char* fname, Document* doc){
     char cwd[PATH_MAX + 255];
-    if(getcwd(cwd, sizeof(cwd)) == NULL){
-        return -1;
-    }
+    strcpy(cwd, g_current_directory);
     strcat(cwd, "/");
     strcat(cwd, fname);
     if(save_file(cwd, doc) == 0){
@@ -114,9 +113,7 @@ int save_file_name(char* fname, Document* doc){
 
 int load_file_name(char* fname, Document* doc){
     char cwd[PATH_MAX + 255];
-    if(getcwd(cwd, sizeof(cwd)) == NULL){
-        return -1;
-    }
+    strcpy(cwd, g_current_directory);
     strcat(cwd, "/");
     strcat(cwd, fname);
     int result;
@@ -129,9 +126,7 @@ int load_file_name(char* fname, Document* doc){
 
 int file_exist_with_same_name(char* str){
     char cwd[PATH_MAX + 255];
-    if(getcwd(cwd, sizeof(cwd)) == NULL){
-        return -1;
-    }
+    strcpy(cwd, g_current_directory);
     strcat(cwd, "/");
     strcat(cwd, str);
     if(access(cwd, F_OK) == 0){

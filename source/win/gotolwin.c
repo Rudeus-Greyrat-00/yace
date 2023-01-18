@@ -119,3 +119,4 @@ int gotow_handle_input(UserControl uc, wchar_t input, int crm){
     }
     return R_OK;
 }
+
