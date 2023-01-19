@@ -86,7 +86,7 @@ int path_exists(char* str){
     return false;
 }
 
-int compile_file_list(Document* doc){
+int compile_file_list(Document* doc, int directory_only){
     if(doc != NULL){
         dealloc_document(doc);
     }
@@ -100,6 +100,7 @@ int compile_file_list(Document* doc){
     while ((dir = readdir(d)) != NULL){
         if(strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0) continue;
         if(dir->d_type != DT_REG && dir->d_type != DT_DIR) continue;
+        if(directory_only && dir->d_type != DT_DIR) continue;
         int sz = strlen(dir->d_name);
         if(dir->d_type == DT_DIR){
             int result = doc_add_character(doc, '/');
@@ -130,7 +131,7 @@ int compile_file_list(Document* doc){
     return 0;
 }
 
-int get_dir_type(char* str){
+int get_dir_type(char* str){ //in current working directory
     DIR* d;
     struct dirent *dir;
     d = opendir(g_current_directory);
@@ -151,4 +152,47 @@ int get_dir_type(char* str){
     }
     closedir(d);
     return -1;
+}
+
+int move_current_directory_up(){
+    char new_dir[PATH_MAX];
+    strcpy(new_dir, g_current_directory);
+    if(strcmp(new_dir, "/") == 0) return 0; //can't go upper, but not an error
+    int i = strlen(new_dir);
+    while(new_dir[i] != '/'){
+        new_dir[i] = '\0';
+        i--;
+    }
+    if(i > 0) new_dir[i] = '\0';
+    if(path_exists(new_dir)){
+        strcpy(g_current_directory, new_dir);
+        return 0;
+    }
+    return -1;
+}
+
+int open_file_or_directory(char* dir, int directory_only){ //if the parameter string is the name of a file in current directory, it open it. Otherwise it goes into the directory and update g_current_directory
+    int dirtype = get_dir_type(dir);
+    if(dirtype < 0) return -1;
+    if(dirtype == DT_DIR){
+        char new_path[PATH_MAX];
+        strcpy(new_path, g_current_directory);
+        if(strlen(new_path) > 1)strcat(new_path, dir);
+        else strcat(new_path, dir + 1); //dir contains always "/" as first character. If we are in a folder, current directory will be something like /bla/bla/bla/folder, and then I want to add /newfolder, to get /bla/bla/bla/folder/newfolder
+        //but in I'm in the root folder /, then I don't want to get //newfolder, so this is the reason of this if/else statements
+        if(path_exists(new_path)){
+            strcpy(g_current_directory, new_path);
+            return WAS_A_DIR;
+        }
+        else return -1; //something went wrong
+    }
+    else if(dirtype == DT_REG && !directory_only){
+        dealloc_document(g_usercontrol_stack[0]->doc);
+        g_usercontrol_stack[0]->doc = alloc_document(1, STR_REALLOC_DEF_INTERVAL);
+        if(g_usercontrol_stack[0]->doc == NULL) log_unfixable_error(true, "Memory allocation for main document failed [FROM openwin.c]");
+        int result = load_file_name(dir, g_usercontrol_stack[0]->doc);
+        if(result < 0) return result;
+        return WAS_A_FILE;
+    }
+    return -1; //if function compile_file_list was used, this should never occur
 }

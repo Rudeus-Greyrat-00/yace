@@ -18,62 +18,33 @@
 
 #define MAX_PATHLENGHT_STRING 55
 
-#define WAS_A_FILE 1
-#define WAS_A_DIR 2
+//in struct of this module, the doc field should always contains an updated version of the list of item in the current directory 
 
 int on_press_enter(UserControl uc){
     if(uc->doc->size == 1 && uc->doc->lines[0]->_used == 0) return 0; //current folder is empty
     char dir[PATH_MAX];
     int news = wchar_to_char(uc->doc->lines[uc->doc->cursor_y]->string, dir, PATH_MAX);
     if(news <= 0) return -1;
-    int dirtype = get_dir_type(dir);
-    if(dirtype < 0) return -1;
-    if(dirtype == DT_DIR){
-        char new_path[PATH_MAX];
-        strcpy(new_path, g_current_directory);
-        if(strlen(new_path) > 1)strcat(new_path, dir);
-        else strcat(new_path, dir + 1); //dir contains always "/" as first character. If we are in a folder, current directory will be something like /bla/bla/bla/folder, and then I want to add /newfolder, to get /bla/bla/bla/folder/newfolder
-        //but in I'm in the root folder /, then I don't want to get //newfolder, so this is the reason of this if/else statements
-        if(path_exists(new_path)){
-            strcpy(g_current_directory, new_path);
-            int result = compile_file_list(uc->doc);
-            if(result < 0) return result;
-            return WAS_A_DIR;
-        }
-        else return -1; //something went wrong
+    int result = open_file_or_directory(dir, false);
+    if(result < 0) return -1;
+    if(result == WAS_A_FILE) return WAS_A_FILE;
+    else if(result == WAS_A_DIR){
+        result = compile_file_list(uc->doc, false);
+        if(result < 0) log_unfixable_error(true, "Function compile_file_list failed after directory changed [OPENWIN.C]");
+        else return WAS_A_DIR;
     }
-    else if(dirtype == DT_REG){
-        dealloc_document(g_usercontrol_stack[0]->doc);
-        g_usercontrol_stack[0]->doc = alloc_document(1, STR_REALLOC_DEF_INTERVAL);
-        if(g_usercontrol_stack[0]->doc == NULL) log_unfixable_error(true, "Memory allocation for main document failed [FROM openwin.c]");
-        int result = load_file_name(dir, g_usercontrol_stack[0]->doc);
-        if(result < 0) return result;
-        return WAS_A_FILE;
-    }
-    return -1;
+    log_unfixable_error(true, "Function open_file_or_directory retunred an unexpected value [OPENWIN.C]");
+    return -1; //never reached, put to stop the compiler from complain
 }
 
 int on_press_ctrlup(UserControl uc){
-    char new_dir[PATH_MAX];
-    strcpy(new_dir, g_current_directory);
-    if(strcmp(new_dir, "/") == 0) return 0; //can't go upper, but not an error
-    int i = strlen(new_dir);
-    while(new_dir[i] != '/'){
-        new_dir[i] = '\0';
-        i--;
-    }
-    if(i > 0) new_dir[i] = '\0';
-    if(path_exists(new_dir)){
-        strcpy(g_current_directory, new_dir);
-        return 0;
-    }
-    return -1;
+    return move_current_directory_up();
 }
 
 int openw_init(UserControl uc){
     WINDOW *savewin = create_window(OPENW_HEIGH, OPENW_WIDTH, OPENW_DEF_POSY, OPENW_DEF_POSX);
     Guiw_mask *mask = alloc_guiw_mask(MASK_H, MASK_W);
-    int result = compile_file_list(uc->doc);
+    int result = compile_file_list(uc->doc, false);
     if(savewin == NULL || mask == NULL || result < 0) {
         if(mask != NULL) dealloc_guiw_mask(mask);
         return -1;
@@ -149,7 +120,7 @@ int openw_handle_input(UserControl uc, wchar_t input, int crm){
                     case CTRL_A_KEY_UP:
                     case KEY_PGUP:
                         on_press_ctrlup(uc);
-                        int result = compile_file_list(uc->doc);
+                        int result = compile_file_list(uc->doc, false);
                         if(result <= 0) return result;
                         break;
                 }

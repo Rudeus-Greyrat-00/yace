@@ -25,6 +25,9 @@
 #define PGUP_INPUT {91, 53, 126, -1, -1, -1, -1, -1, -1}
 #define PGDOWN_INPUT {91, 54, 126, -1, -1, -1, -1, -1, -1}
 
+#define WAS_A_FILE 1
+#define WAS_A_DIR 2
+
 int is_valid_character(wint_t character);
 int check_control_mode(struct timeval start, struct timeval end);
 
@@ -37,6 +40,8 @@ void log_unfixable_error(int deinit_gui, char* str);
 void generate_path_str(char* dest, int limit);
 int path_exists(char* str);
 int get_dir_type(char* str);
-int compile_file_list(Document* doc);
+int compile_file_list(Document* doc, int directory_only);
+int open_file_or_directory(char* dir, int directory_only);
+int move_current_directory_up();
 
 #endif // UTILS
