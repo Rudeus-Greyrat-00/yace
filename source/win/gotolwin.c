@@ -1,10 +1,10 @@
 #include "gotolwin.h"
 
 #define GOTOW_DEF_POSX 8
-#define GOTOW_DEF_POSY 2
+#define GOTOW_DEF_POSY 1
 
 #define GOTOW_WIDTH 40
-#define GOTOW_HEIGH 10
+#define GOTOW_HEIGH 6
 
 int gotow_init(UserControl uc){
     WINDOW *gotowin = create_window(GOTOW_HEIGH, GOTOW_WIDTH, GOTOW_DEF_POSY, GOTOW_DEF_POSX);
@@ -43,21 +43,21 @@ int gotow_draw(UserControl uc){
     werase(uc->window);
     wmove(uc->window, 1, 1);
     wprintw(uc->window, "Go to line:");
-    wmove(uc->window, 3, 1);
+    wmove(uc->window, 2, 1);
     wprintw(uc->window, "0 ≥  ");
     wprintw(uc->window, "%ls", uc->mask->matrix[0]);
     wprintw(uc->window, " ≥ %d", max_value - 1);
     char val[2 * MAX_ROW_GOTOL_INPUT];
     int news = wchar_to_char(uc->doc->lines[0]->string, val, 2 * MAX_ROW_GOTOL_INPUT);
-    if(news > 0 && news <= MAX_ROW_GOTOL_INPUT && atoi(val) < max_value); //ok
+    if(news > 0 && news < MAX_ROW_GOTOL_INPUT && atoi(val) < max_value); //ok
     else if(news > 0){
-        wmove(uc->window, 5, 1);
+        wmove(uc->window, 3, 1);
         wprintw(uc->window, "Index out of range");
     }
-    wmove(uc->window, 7, 1);
-    wprintw(uc->window, "ENTER to confirm, CTRL+Q to cancel");
+    wmove(uc->window, 4, 1);
+    wprintw(uc->window, "[ENTER] to confirm, [CTRL+Q] to cancel");
 
-    wmove(uc->window, 3, 6 + uc->mask->cursor_x);
+    wmove(uc->window, 2, 6 + uc->mask->cursor_x);
     box(uc->window, 0, 0);
     wrefresh(uc->window);
     return 0;

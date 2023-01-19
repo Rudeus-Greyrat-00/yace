@@ -95,6 +95,7 @@ void empty_string(Document_string* str){
     for(int i = 0; i < str->_used; i++){
         str->string[i] = '\0';
     }
+    str->_used = 0;
 }
 
 int merge_string(Document_string* dest, Document_string* add, int position){

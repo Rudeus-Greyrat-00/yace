@@ -106,7 +106,7 @@ int realloc_document(Document* doc, int new_size){
     return 0;
 }
 
-int add_line(Document* doc, int position){
+int doc_add_line(Document* doc, int position){
     if(position < 0 || position > doc->size) return -1;
     doc->unsaved = true;
     int result = realloc_document(doc, doc->size + 1); //a new line is added to the end of the array
@@ -119,7 +119,7 @@ int add_line(Document* doc, int position){
     return result;
 }
 
-int remove_line(Document* doc, int position){
+int doc_remove_line(Document* doc, int position){
     if(position < 0 || position >= doc->size) return -1;
     doc->unsaved = true;
     if(position == doc->size - 1) return realloc_document(doc, doc->size - 1);
@@ -150,7 +150,7 @@ int doc_remove_character(Document* doc){
     {
         int next_x_position = doc->lines[doc->cursor_y-1]->_used;
         merge_string(doc->lines[doc->cursor_y - 1], doc->lines[doc->cursor_y], doc->lines[doc->cursor_y - 1]->_used);
-        int result = remove_line(doc, doc->cursor_y);
+        int result = doc_remove_line(doc, doc->cursor_y);
         if(result == 0)
         {
             doc->cursor_y--;

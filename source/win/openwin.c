@@ -29,8 +29,12 @@ int on_press_enter(UserControl uc){
     if(result < 0) return -1;
     if(result == WAS_A_FILE) return WAS_A_FILE;
     else if(result == WAS_A_DIR){
-        result = compile_file_list(uc->doc, false);
-        if(result < 0) log_unfixable_error(true, "Function compile_file_list failed after directory changed [OPENWIN.C]");
+        result = compile_file_list(uc->doc, false, 0);
+        if(result < 0){
+            int sec_chance = move_current_directory_up();
+            if(sec_chance < 0) log_unfixable_error(true, "Multiple errors [OPENWIN.C]");
+            return result;
+        }
         else return WAS_A_DIR;
     }
     log_unfixable_error(true, "Function open_file_or_directory retunred an unexpected value [OPENWIN.C]");
@@ -44,7 +48,7 @@ int on_press_ctrlup(UserControl uc){
 int openw_init(UserControl uc){
     WINDOW *savewin = create_window(OPENW_HEIGH, OPENW_WIDTH, OPENW_DEF_POSY, OPENW_DEF_POSX);
     Guiw_mask *mask = alloc_guiw_mask(MASK_H, MASK_W);
-    int result = compile_file_list(uc->doc, false);
+    int result = compile_file_list(uc->doc, false, 0);
     if(savewin == NULL || mask == NULL || result < 0) {
         if(mask != NULL) dealloc_guiw_mask(mask);
         return -1;
@@ -67,7 +71,7 @@ int openw_draw(UserControl uc){
     werase(uc->window);
     box(uc->window, 0, 0);
     wmove(uc->window, MASK_POSY + MASK_H, 0);
-    wprintw(uc->window, "├────────────────────┄┄┈┈");
+    wprintw(uc->window, "├────────────────────────────[Item %d/%d]", uc->doc->cursor_y + 1, uc->doc->size);
     wmove(uc->window, MASK_POSY + MASK_H + 1, 1);
     wprintw(uc->window, "Press [CTRL + ↑] or [Page up] to go one folder up");
     wmove(uc->window, MASK_POSY + MASK_H + 2, 1);
@@ -120,8 +124,8 @@ int openw_handle_input(UserControl uc, wchar_t input, int crm){
                     case CTRL_A_KEY_UP:
                     case KEY_PGUP:
                         on_press_ctrlup(uc);
-                        int result = compile_file_list(uc->doc, false);
-                        if(result <= 0) return result;
+                        int result = compile_file_list(uc->doc, false, 0);
+                        if(result < 0) return result;
                         break;
                 }
                 reset_cnt_buffer(input_buffer);

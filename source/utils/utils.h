@@ -40,7 +40,7 @@ void log_unfixable_error(int deinit_gui, char* str);
 void generate_path_str(char* dest, int limit);
 int path_exists(char* str);
 int get_dir_type(char* str);
-int compile_file_list(Document* doc, int directory_only);
+int compile_file_list(Document* doc, int directory_only, int starting_line);
 int open_file_or_directory(char* dir, int directory_only);
 int move_current_directory_up();
 

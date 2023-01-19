@@ -86,12 +86,23 @@ int path_exists(char* str){
     return false;
 }
 
-int compile_file_list(Document* doc, int directory_only){
-    if(doc != NULL){
-        dealloc_document(doc);
+int compile_file_list(Document* doc, int directory_only, int starting_line){ //take a document, remove everything from starting_line and then write from starting_line the list of item in current g_current_directory
+    if(doc == NULL || starting_line < 0) return -1; 
+    if(doc->size > starting_line){ //remove everything over starting_line
+        for(int i = doc->size - 1; i > starting_line; i--){
+            int result = doc_remove_line(doc, i);
+            if(result < 0) return result;
+        }
+        empty_string(doc->lines[doc->size - 1]); //last string
     }
-    doc = alloc_document(1, STR_REALLOC_DEF_INTERVAL);
-    if(doc == NULL) return -1; 
+    else if(doc->size <= starting_line){
+        for(int i = doc->size; i <= starting_line; i++){
+            int result = doc_add_line(doc, doc->size);
+            if(result < 0) return result;
+        }
+    }
+    doc->cursor_x = 0;
+    doc->cursor_y = starting_line;
     DIR *d;
     struct dirent *dir;
     d = opendir(g_current_directory);

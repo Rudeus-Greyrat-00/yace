@@ -2,14 +2,19 @@
 #include <string.h>
 
 #define SAVEW_DEF_POSX 8
-#define SAVEW_DEF_POSY 2
+#define SAVEW_DEF_POSY 1
 
-#define SAVEW_WIDTH 60
-#define SAVEW_HEIGH 10
+#define SAVEW_WIDTH 80
+#define SAVEW_HEIGH 9
+
+#define MASK_H 13
+#define MASK_W 74
+
+#define MAX_PATHLENGHT_STRING 55
 
 int savew_init(UserControl uc){
     WINDOW *savewin = create_window(SAVEW_HEIGH, SAVEW_WIDTH, SAVEW_DEF_POSY, SAVEW_DEF_POSX);
-    Guiw_mask *mask = alloc_guiw_mask(1, SAVEW_WIDTH - 2);
+    Guiw_mask *mask = alloc_guiw_mask(MASK_H, MASK_W);
     if(savewin == NULL || mask == NULL) {
         if(mask != NULL) dealloc_guiw_mask(mask);
         return -1;
@@ -32,6 +37,11 @@ int savew_draw(UserControl uc){
     werase(uc->window);
     wmove(uc->window, 1, 1);
     wprintw(uc->window, "Save with name:");
+    wmove(uc->window, 2, 1);
+    wprintw(uc->window, "Current directory: ");
+    char display_path[MAX_PATHLENGHT_STRING];
+    generate_path_str(display_path, MAX_PATHLENGHT_STRING);
+    wprintw(uc->window, "%s", display_path);
     wmove(uc->window, 3, 1);
     wprintw(uc->window, "%ls", uc->mask->matrix[0]);
     wmove(uc->window, 5, 1);
@@ -41,14 +51,14 @@ int savew_draw(UserControl uc){
         int news = wchar_to_char(uc->doc->lines[0]->string, filename, MAX_FNAME_SIZE);
         if(news > 0){
             if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) wprintw(uc->window, "The names .. and . are reserved");
-            else if(file_exist_with_same_name(filename)) wprintw(uc->window, "There exist a file with the same name in current directory\n By pressing ENTER, the old file will be overwritten");
+            else if(file_exist_with_same_name(filename)) wprintw(uc->window, "There exist a file with the same name in current directory\n By pressing [ENTER], the old file will be overwritten");
+        }
+            else if(size >= MAX_FNAME_SIZE){
+            wprintw(uc->window, "Please write a shorter name");
         }
     }
-    else if(size >= MAX_FNAME_SIZE){
-        wprintw(uc->window, "Please write a shorter name");
-    }
     wmove(uc->window, 7, 1);
-    wprintw(uc->window, "ENTER to confirm, CTRL+Q to cancel");
+    wprintw(uc->window, "Press [ENTER] to confirm, [CTRL+Q] to cancel");
 
     wmove(uc->window, 3, 1 + uc->mask->cursor_x);
     box(uc->window, 0, 0);
@@ -81,6 +91,9 @@ int savew_handle_input(UserControl uc, wchar_t input, int crm){
                         break;
                     case CTRL_A_KEY_RIGHT:
                         doc_cursor_move_right(doc, C_MODE_CTRL, false);
+                        break;
+                    case CTRL_A_KEY_UP:
+                    case KEY_PGUP:
                         break;
                 }
                 reset_cnt_buffer(input_buffer);

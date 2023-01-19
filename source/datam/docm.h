@@ -43,4 +43,7 @@ int doc_cursor_enter(Document* doc);
 int doc_pagedown(Document* doc, int pageh);
 int doc_pageup(Document* doc, int pageh);
 
+int doc_remove_line(Document* doc, int position);
+int doc_add_line(Document* doc, int position);
+
 #endif // DOCM
