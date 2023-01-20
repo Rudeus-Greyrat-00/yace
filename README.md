@@ -46,7 +46,7 @@ $ sudo apt-get install libncurses5-dev libncursesw5-dev
 $ cd (go inside "source")
 $ make
 ```
-3 - Some folder will be generated, the compiled program should be inside projectfolder/bin/Relase
+3 - Some folder will be generated, the compiled program should be inside projectfolder/bin/
 
 # Know issues:
 
