@@ -8,7 +8,7 @@
 #define CARRIAGE_RETURN '\r'
 #define LINE_FEED '\n'
 
-int load_file(char* path, Document* doc){
+int load_file_path(char* path, Document* doc){
     if(access(path, F_OK) != 0){
         return ERR_NOT_FOUND;
     }
@@ -72,7 +72,7 @@ int load_file(char* path, Document* doc){
     return 0;
 }
 
-int save_file(char* path, Document* doc){
+int save_file_path(char* path, Document* doc){
     FILE* file = fopen(path, "w");
     for(int i = 0; i < doc->size; i++){
         Document_string* curr_str = doc->lines[i];
@@ -99,13 +99,25 @@ int save_file(char* path, Document* doc){
     return 0;
 }
 
+int save_file(Document* doc){
+    char cwd[PATH_MAX + 255];
+    strcpy(cwd, doc->docdir);
+    strcat(cwd, "/");
+    strcat(cwd, doc->docname);
+    if(save_file_path(cwd, doc) == 0){
+        return 0;
+    }
+    else return -1;
+}
+
 int save_file_name(char* fname, Document* doc){
     char cwd[PATH_MAX + 255];
     strcpy(cwd, g_current_directory);
     strcat(cwd, "/");
     strcat(cwd, fname);
-    if(save_file(cwd, doc) == 0){
+    if(save_file_path(cwd, doc) == 0){
         sprintf(doc->docname, "%s", fname);
+        sprintf(doc->docdir, "%s", g_current_directory);
         return 0;
     }
     else return -1;
@@ -117,8 +129,9 @@ int load_file_name(char* fname, Document* doc){
     strcat(cwd, "/");
     strcat(cwd, fname);
     int result;
-    if((result = load_file(cwd, doc)) == 0){
+    if((result = load_file_path(cwd, doc)) == 0){
         sprintf(doc->docname, "%s", fname);
+        sprintf(doc->docdir, "%s", g_current_directory);
         return 0;
     }
     else return result;

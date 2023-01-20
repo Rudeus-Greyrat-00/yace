@@ -40,7 +40,7 @@ int savew_draw(UserControl uc){
     wmove(uc->window, 2, 1);
     wprintw(uc->window, "Current directory: ");
     char display_path[MAX_PATHLENGHT_STRING];
-    generate_path_str(display_path, MAX_PATHLENGHT_STRING);
+    generate_path_str(display_path, g_current_directory, MAX_PATHLENGHT_STRING);
     wprintw(uc->window, "%s", display_path);
     wmove(uc->window, 3, 1);
     wprintw(uc->window, "%ls", uc->mask->matrix[0]);
@@ -106,8 +106,7 @@ int savew_handle_input(UserControl uc, wchar_t input, int crm){
                     break;
                 case BACKSPACE_KEY:
                     feedback = doc_remove_character(doc);
-                    if(feedback == FEEDB_DELLAST_LINE) move_guiw_mask(mask, 0, -1);
-                    else if(feedback == FEEDB_DELLAST_CHAR) move_guiw_mask(mask, -1, 0);
+                    if(feedback == FEEDB_DELLAST_CHAR) move_guiw_mask(mask, -1, 0);
                     break;
                 case ENTER_KEY:{
                     int size = uc->doc->lines[0]->_used;
@@ -116,8 +115,14 @@ int savew_handle_input(UserControl uc, wchar_t input, int crm){
                     int news = wchar_to_char(uc->doc->lines[0]->string, filename, MAX_FNAME_SIZE);
                     if(news <= 0) break;
                     if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) break;
+                    char old_docdir[PATH_MAX];
+                    strcpy(old_docdir, g_usercontrol_stack[0]->doc->docdir);
                     int result = save_file_name(filename, g_usercontrol_stack[0]->doc);
-                    if(result >= 0) GUI_REMOVE_WINDOW();
+                    if(result >= 0) GUI_REMOVE_WINDOW(); //all ok!
+                    else{
+                        strcpy(g_usercontrol_stack[0]->doc->docdir, old_docdir); //rip
+                        return -1;
+                    }
                     break;
                     }
                 default:

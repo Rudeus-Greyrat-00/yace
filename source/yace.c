@@ -52,6 +52,7 @@ int main(int argc, char** argv){
 
     //initialization:
     sprintf(doc->docname, "%s", document_name);
+    sprintf(doc->docdir, "%s", g_current_directory);
     int quit = false, control_receiving_mode = false;
     wchar_t ch;
 
@@ -86,7 +87,6 @@ int main(int argc, char** argv){
         }
         else{
             if(current == UC_NAME_MAINW){
-                int feedback;
                 switch(res){
                     case R_REFRESH:
                         GUI_REINIT(doc);

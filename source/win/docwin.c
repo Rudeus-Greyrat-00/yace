@@ -22,8 +22,12 @@ int generate_info_string(Document* doc, char* str){
     return strlen(str);
 }
 
-int generate_title_string(char* docname, char* str, int unsaved){
-    sprintf(str, "[%s", docname);
+int generate_title_string(Document* doc, char* str, int unsaved){
+    char path[20];
+    generate_path_str(path, doc->docdir, 19);
+    sprintf(str, "[%s", path);
+    strcat(str, "/");
+    strcat(str, doc->docname);
     if(unsaved) strcat(str, "*");
     strcat(str, "]─[yace v.");
     strcat(str, YACE_VER);
@@ -60,7 +64,7 @@ void draw_docw(WINDOW* document_window, Document* doc, Guiw_mask* mask){
     wmove(document_window, y - 1, x - strsize + 3); //this is definetely not right
     wprintw(document_window, "%s", info_string);
     char title_string[256]; //start printing title string
-    strsize = generate_title_string(doc->docname, title_string, doc->unsaved);
+    strsize = generate_title_string(doc, title_string, doc->unsaved);
     wmove(document_window, 0, x - strsize + 1); //this is definitely not right, like the other line. IDK why they are working this way.
     wprintw(document_window, "%s", title_string);
     wmove(document_window, DEF_DOCW_OFF_Y + DEF_CURSOR_OFF_Y + mask->cursor_y, DEF_DOCW_OFF_X + DEF_CURSOR_OFF_X + mask->cursor_x); //move cursor to right position
@@ -199,7 +203,7 @@ int docw_handle_input(UserControl uc, wchar_t input, int crm){
                 case REFRESH:
                     return R_REFRESH;
                 case SAVE:
-                    feedback = save_file_name(doc->docname, doc);
+                    feedback = save_file(doc);
                     if(feedback < 0) return feedback;
                     break;
                 case SAVE_WITH_NAME:

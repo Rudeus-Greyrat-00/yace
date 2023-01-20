@@ -67,13 +67,13 @@ void log_unfixable_error(int deinit_gui, char* error){
     exit(-1);
 }
 
-void generate_path_str(char* dest, int limit){
-    if(strlen(g_current_directory) > limit){
-        sprintf(dest + 2, "%s", g_current_directory + strlen(g_current_directory) - limit + 2);
+void generate_path_str(char* dest, char* source, int limit){
+    if(strlen(source) > limit){
+        sprintf(dest + 2, "%s", source + strlen(source) - limit + 2);
         dest[0] = '.';
         dest[1] = '.';
     }
-    else sprintf(dest, "%s", g_current_directory);
+    else sprintf(dest, "%s", source);
 }
 
 int path_exists(char* str){
@@ -135,8 +135,8 @@ int compile_file_list(Document* doc, int directory_only, int starting_line){ //t
     }
     if(errno != 0) return -1;
     closedir(d);
-    int result = doc_remove_character(doc);
-    if(result < 0) return result;
+    int result = doc_remove_character(doc); //remove the last enter, if any
+    if(result < 0 && doc->size > 1) return result; 
     doc->cursor_x = 0;
     doc->cursor_y = 0;
     return 0;
@@ -206,4 +206,8 @@ int open_file_or_directory(char* dir, int directory_only){ //if the parameter st
         return WAS_A_FILE;
     }
     return -1; //if function compile_file_list was used, this should never occur
+}
+
+void update_docdir(Document* doc){
+    strcpy(doc->docdir, g_current_directory);
 }

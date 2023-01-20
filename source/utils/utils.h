@@ -2,6 +2,7 @@
 #define UTILS
 #include "../main.h"
 #include "../visual/guim.h"
+#include "filem.h"
 
 #define A_KEY_LEFT 1
 #define A_KEY_RIGHT 2
@@ -37,11 +38,12 @@ int check_action(int* buffer);
 int wchar_to_char(wchar_t* source, char* destination, int size);
 
 void log_unfixable_error(int deinit_gui, char* str);
-void generate_path_str(char* dest, int limit);
+void generate_path_str(char* dest, char* source, int limit);
 int path_exists(char* str);
 int get_dir_type(char* str);
 int compile_file_list(Document* doc, int directory_only, int starting_line);
 int open_file_or_directory(char* dir, int directory_only);
 int move_current_directory_up();
+void update_docdir(Document* doc);
 
 #endif // UTILS

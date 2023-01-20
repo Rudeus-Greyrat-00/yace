@@ -63,6 +63,7 @@ Document* alloc_document(int size, int line_size){
     doc->size = size;
     doc->mode = 0;
     sprintf(doc->docname, "UNNAMED");
+    sprintf(doc->docdir, "/");
     doc->unsaved = true;
     return doc;
 }

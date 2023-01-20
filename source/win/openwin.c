@@ -81,7 +81,7 @@ int openw_draw(UserControl uc){
     wmove(uc->window, 2, 1);
     wprintw(uc->window, "Current directory: ");
     char display_path[MAX_PATHLENGHT_STRING];
-    generate_path_str(display_path, MAX_PATHLENGHT_STRING);
+    generate_path_str(display_path, g_current_directory, MAX_PATHLENGHT_STRING);
     wprintw(uc->window, "%s", display_path);
     for(int i = 0; i < uc->mask->rows; i++){ //print document text from mask matrix
         wmove(uc->window, MASK_POSY + i, MASK_POSX);
@@ -104,7 +104,6 @@ int openw_handle_input(UserControl uc, wchar_t input, int crm){
     Document* doc = uc->doc;
     //Guiw_mask* mask = uc->mask;
 
-    int feedback = 0;
     if(ch == ESCAPE_KEY) reset_cnt_buffer(input_buffer);
     if(crm && ch != ESCAPE_KEY){
             cnt_buffer_addchar(input_buffer, ch);

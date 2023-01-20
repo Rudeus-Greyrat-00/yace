@@ -2,6 +2,7 @@
 #define DOCM
 #include "../main.h"
 #include "memm.h"
+#include <limits.h>
 
 #define C_MODE_STD 0
 #define C_MODE_CTRL 1
@@ -21,6 +22,7 @@ typedef struct{
     int selection_end_x;
     int selection_end_y;
     int mode;
+    char docdir[PATH_MAX];
     char docname[MAX_FNAME_SIZE];
     int unsaved;
 } Document;
