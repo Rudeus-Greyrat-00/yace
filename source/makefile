@@ -30,7 +30,7 @@ DEP_DEBUG =
 OUT_DEBUG = bin/yace
 
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/maskm.o $(OBJDIR_DEBUG)/yace.o $(OBJDIR_DEBUG)/utils.o $(OBJDIR_DEBUG)/savewin.o $(OBJDIR_DEBUG)/openwin.o $(OBJDIR_DEBUG)/memm.o $(OBJDIR_DEBUG)/docm.o $(OBJDIR_DEBUG)/guim.o $(OBJDIR_DEBUG)/gotolwin.o $(OBJDIR_DEBUG)/filem.o $(OBJDIR_DEBUG)/docwin.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/maskm.o $(OBJDIR_DEBUG)/yace.o $(OBJDIR_DEBUG)/utils.o $(OBJDIR_DEBUG)/savewin.o $(OBJDIR_DEBUG)/openwin.o $(OBJDIR_DEBUG)/chwdwin.o $(OBJDIR_DEBUG)/memm.o $(OBJDIR_DEBUG)/docm.o $(OBJDIR_DEBUG)/guim.o $(OBJDIR_DEBUG)/gotolwin.o $(OBJDIR_DEBUG)/filem.o $(OBJDIR_DEBUG)/docwin.o
 
 all: build
 
@@ -61,6 +61,9 @@ $(OBJDIR_DEBUG)/savewin.o: win/savewin.c
 
 $(OBJDIR_DEBUG)/openwin.o: win/openwin.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/openwin.c -o $(OBJDIR_DEBUG)/openwin.o
+
+$(OBJDIR_DEBUG)/chwdwin.o: win/chwdwin.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c win/chwdwin.c -o $(OBJDIR_DEBUG)/chwdwin.o
 
 $(OBJDIR_DEBUG)/memm.o: datam/memm.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c datam/memm.c -o $(OBJDIR_DEBUG)/memm.o

@@ -46,6 +46,7 @@
 #define UNDO 26 //CTRL Z
 #define GOTOL 7 //CTRL G
 #define OPEN 15 //CTRL O
+#define CHANGE_WD 23 //CTRL W
 
 #define MODE_DETECT_LINUX 1
 #define MODE_DETECT_WINDOWS 2

@@ -5,9 +5,12 @@
 #define SAVEW_DEF_POSY 1
 
 #define SAVEW_WIDTH 80
-#define SAVEW_HEIGH 9
+#define SAVEW_HEIGH 10
 
-#define MASK_H 13
+#define MASK_POSX 1
+#define MASK_POSY 3
+
+#define MASK_H 1
 #define MASK_W 74
 
 #define MAX_PATHLENGHT_STRING 55
@@ -42,7 +45,7 @@ int savew_draw(UserControl uc){
     char display_path[MAX_PATHLENGHT_STRING];
     generate_path_str(display_path, g_current_directory, MAX_PATHLENGHT_STRING);
     wprintw(uc->window, "%s", display_path);
-    wmove(uc->window, 3, 1);
+    wmove(uc->window, MASK_POSY, MASK_POSX);
     wprintw(uc->window, "%ls", uc->mask->matrix[0]);
     wmove(uc->window, 5, 1);
     int size = uc->doc->lines[0]->_used;
@@ -59,8 +62,9 @@ int savew_draw(UserControl uc){
     }
     wmove(uc->window, 7, 1);
     wprintw(uc->window, "Press [ENTER] to confirm, [CTRL+Q] to cancel");
-
-    wmove(uc->window, 3, 1 + uc->mask->cursor_x);
+    wmove(uc->window, 8, 1);
+    wprintw(uc->window, "Press [CTRL + W] to change current directory");
+    wmove(uc->window, MASK_POSY, MASK_POSX + uc->mask->cursor_x);
     box(uc->window, 0, 0);
     wrefresh(uc->window);
     return 0;
@@ -103,6 +107,9 @@ int savew_handle_input(UserControl uc, wchar_t input, int crm){
             switch(ch){
                 case QUIT:
                     GUI_REMOVE_WINDOW();
+                    break;
+                case CHANGE_WD:
+                    GUI_ADD_WINDOW(UC_NAME_CHANGEWD);
                     break;
                 case BACKSPACE_KEY:
                     feedback = doc_remove_character(doc);
